@@ -1,28 +1,35 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
+import { useQuery } from "react-query";
 
-const Main = ({ data }) => {
-  console.log(data);
+import axios from "../features/weather";
+import Background from "../components/background";
 
-  useEffect(() => {
-    axios
-      .get(`https://api.openweathermap.org/data/3.0/onecall`, {
-        params: {
-          lat: data.latitude,
-          lon: data.longitude,
-          appid: "755c906b9f20c638fdc343eedabac6eb",
-        },
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+const Main = ({ user }) => {
+  const [weatherData, setWeatherData] = useState();
 
-  return <Container></Container>;
+  const { isLoading } = useQuery(
+    "weather",
+    () => {
+      axios
+        .get(`/current?lat=${user?.latitude}&lon=${user?.longitude}`, {})
+        .then((response) => {
+          setWeatherData(response.data.data[0]);
+          return response.data;
+        });
+    },
+    { enabled: user != null }
+  );
+
+  // console.log(weatherData);
+
+  if (isLoading) return <p>Loading...</p>;
+
+  return (
+    <Container>
+      <Background keyword={weatherData?.weather?.description} />
+    </Container>
+  );
 };
 const Container = styled.div``;
 

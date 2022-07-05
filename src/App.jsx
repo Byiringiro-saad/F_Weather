@@ -1,23 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
+import { useQuery } from "react-query";
+import axios from "./features/location";
 
 import Main from "./pages/main";
-import Background from "./components/background";
 
 const App = () => {
-  const [locationData, setLocationData] = useState({});
+  const [userData, setUserData] = useState();
 
-  useEffect(() => {
-    axios.get("http://ipwho.is").then((response) => {
-      setLocationData(response.data);
+  const { isLoading } = useQuery("location", () => {
+    axios.get("/").then((response) => {
+      setUserData(response.data);
     });
-  }, []);
+  });
+
+  if (isLoading) return <p>Loading...</p>;
 
   return (
     <Container>
-      <Main data={locationData} />
-      <Background />
+      <Main user={userData} />
     </Container>
   );
 };
