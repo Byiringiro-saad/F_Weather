@@ -27,7 +27,7 @@ const Background = ({ keyword }) => {
 
   return (
     <Container>
-      <img src={image?.urls?.full} />
+      <img src={image?.urls?.full} alt="background" />
     </Container>
   );
 };
