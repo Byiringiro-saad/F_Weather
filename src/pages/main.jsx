@@ -4,6 +4,7 @@ import { useQuery } from "react-query";
 
 import axios from "../features/weather";
 import Background from "../components/background";
+import Content from "../components/content";
 
 const Main = ({ user }) => {
   const [weatherData, setWeatherData] = useState();
@@ -27,10 +28,18 @@ const Main = ({ user }) => {
 
   return (
     <Container>
+      <Content data={weatherData} />
       <Background keyword={weatherData?.weather?.description} />
     </Container>
   );
 };
-const Container = styled.div``;
+const Container = styled.div`
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
 
 export default Main;
