@@ -14,5 +14,5 @@ A wonderfull website 😊 to help you know the weather outside
     <li>Wind</li>
     <li>Clouds</li>
     <li>Snow</li>
-    <li>background image based on weather</li>
+    <li>Weather background</li>
 </ul>
